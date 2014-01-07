@@ -13,6 +13,6 @@ setup(name='cellar',
       install_requires=['argh'],
       packages=[],
       license='',
-      scripts=['cellar'],
+      scripts=['cellar', 'requests'],
       keywords='salt pip pkg formula',
       )
