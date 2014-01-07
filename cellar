@@ -38,6 +38,15 @@ def list():
             print
 
 
+def get_formula(formulas, name):
+    name = name.replace("-formula", "")
+    if name not in [x["name"].replace("-formula", "") for x in formulas]:
+        sys.stderr.write("Uknow formula: %s\n" % name)
+        sys.exit(1)
+
+    return filter(lambda x: x["name"].replace("-formula", "") == name, formulas)[0]
+
+
 def install(*names):
     if not names:
         sys.stderr("Give me a list of formulas to install\n")
@@ -45,12 +54,8 @@ def install(*names):
 
     for name in names:
         formulas = get_formulas()
-        name = name.replace("-formula", "")
-        if name not in [x["name"].replace("-formula", "") for x in formulas]:
-            sys.stderr.write("Uknow formula: %s\n" % name)
-            sys.exit(1)
 
-        formula = filter(lambda x: x["name"].replace("-formula", "") == name, formulas)[0]
+        formula = get_formula(formulas, name)
 
         if not path.exists(formulas_location()):
             os.makedirs(formulas_location())
