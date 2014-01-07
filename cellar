@@ -38,6 +38,10 @@ def list():
 
 
 def install(*names):
+    if not names:
+        sys.stderr("Give me a list of formulas to install")
+        sys.exit(1)
+
     for name in names:
         formulas = get_formulas()
         name = name.replace("-formula", "")
