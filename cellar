@@ -5,7 +5,9 @@ import requests
 
 
 def get_formulas():
-    return sorted(filter(lambda x: x["name"].endswith("-formula"), requests.get("https://api.github.com/users/saltstack-formulas/repos").json()), key=lambda x: x["name"])
+    data = requests.get("https://api.github.com/users/saltstack-formulas/repos").json()
+    formulas = filter(lambda x: x["name"].endswith("-formula"), data)
+    return sorted(formulas, key=lambda x: x["name"])
 
 
 def list():
