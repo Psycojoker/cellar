@@ -22,27 +22,27 @@ Usage
 Quite simple:
 
 ```bash
-    cellar list  # list all available formulas (from https://github.com/saltstack-formulas)
-    cellar install <list of formulas>
-    cellar uninstall <list of formulas>
+cellar list  # list all available formulas (from https://github.com/saltstack-formulas)
+cellar install <list of formulas>
+cellar uninstall <list of formulas>
 ```
 
 You can also install a formula of a custom github repository using the pattern <username>/<repository>:
 
 ```bash
-    cellar install <username>/<repository>
+cellar install <username>/<repository>
 
-    # stupid example
-    cellar install saltstack-formulas/openssh-formula
+# stupid example
+cellar install saltstack-formulas/openssh-formula
 ```
 
 You can also use a git url this way:
 
 ```bash
-    cellar install <git url>
+cellar install <git url>
 
-    # stupid example
-    cellar install git@github.com:saltstack-formulas/openssh-formula.git
+# stupid example
+cellar install git@github.com:saltstack-formulas/openssh-formula.git
 ```
 
 **Cellar is expecting the repository to have, either, a directory or a .sls file with the same name than the repository.**
