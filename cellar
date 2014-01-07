@@ -37,37 +37,38 @@ def list():
             print
 
 
-def install(name):
-    formulas = get_formulas()
-    name = name.replace("-formula", "")
-    if name not in [x["name"].replace("-formula", "") for x in formulas]:
-        sys.stderr.write("Uknow formula: %s\n" % name)
-        sys.exit(1)
+def install(*names):
+    for name in names:
+        formulas = get_formulas()
+        name = name.replace("-formula", "")
+        if name not in [x["name"].replace("-formula", "") for x in formulas]:
+            sys.stderr.write("Uknow formula: %s\n" % name)
+            sys.exit(1)
 
-    formula = filter(lambda x: x["name"].replace("-formula", "") == name, formulas)[0]
+        formula = filter(lambda x: x["name"].replace("-formula", "") == name, formulas)[0]
 
-    if not path.exists(formulas_location()):
-        os.makedirs(formulas_location())
+        if not path.exists(formulas_location()):
+            os.makedirs(formulas_location())
 
-    destination_path = path.join(formulas_location(), name)
-    if not path.exists(destination_path):
-        print "Retreive %s ..." % name
-        os.system("git clone -q %s %s" % (formula["clone_url"], destination_path))
+        destination_path = path.join(formulas_location(), name)
+        if not path.exists(destination_path):
+            print "Retreive %s ..." % name
+            os.system("git clone -q %s %s" % (formula["clone_url"], destination_path))
 
-    source = path.join(formulas_location(), name, name)
-    if not path.exists(source):
-        source = path.join(formulas_location(), name, name + ".sls")
+        source = path.join(formulas_location(), name, name)
+        if not path.exists(source):
+            source = path.join(formulas_location(), name, name + ".sls")
 
-    if not path.exists(source):
-        sys.stderr("Error: was expecting to find a %s/ directory or a %s.sls file in %s" % (name, name, formula["html_url"]))
+        if not path.exists(source):
+            sys.stderr("Error: was expecting to find a %s/ directory or a %s.sls file in %s" % (name, name, formula["html_url"]))
 
-    target = path.join(path.curdir, path.split(source)[1])
+        target = path.join(path.curdir, path.split(source)[1])
 
-    if not path.exists(target):
-        print "Link %s" % name
-        os.symlink(source, target)
-    else:
-        print "Already installed: %s" % name
+        if not path.exists(target):
+            print "Link %s" % name
+            os.symlink(source, target)
+        else:
+            print "Already installed: %s" % name
 
 
 parser = argh.ArghParser()
