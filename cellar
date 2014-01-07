@@ -21,6 +21,7 @@ def curdir_parent_path():
 def curdir_name():
     return path.split(path.realpath(path.curdir))[1]
 
+
 def formulas_location():
     if curdir_name() == "salt":
         return path.join(curdir_parent_path(), "formulas")
@@ -39,7 +40,7 @@ def list():
 
 def install(*names):
     if not names:
-        sys.stderr("Give me a list of formulas to install")
+        sys.stderr("Give me a list of formulas to install\n")
         sys.exit(1)
 
     for name in names:
