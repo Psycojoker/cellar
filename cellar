@@ -51,7 +51,24 @@ def install(name):
 
     destination_path = path.join(formulas_location(), name)
     if not path.exists(destination_path):
-        os.system("git clone %s %s" % (formula["clone_url"], destination_path))
+        print "Retreive %s ..." % name
+        os.system("git clone -q %s %s" % (formula["clone_url"], destination_path))
+
+    source = path.join(formulas_location(), name, name)
+    if not path.exists(source):
+        source = path.join(formulas_location(), name, name + ".sls")
+
+    if not path.exists(source):
+        sys.stderr("Error: was expecting to find a %s/ directory or a %s.sls file in %s" % (name, name, formula["html_url"]))
+
+    target = path.join(path.curdir, path.split(source)[1])
+
+    if not path.exists(target):
+        print "Link %s" % name
+        os.symlink(source, target)
+    else:
+        print "Already installed: %s" % name
+
 
 parser = argh.ArghParser()
 parser.add_commands([list, install])
