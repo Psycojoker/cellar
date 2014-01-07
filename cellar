@@ -64,7 +64,7 @@ def install(*names):
             source = path.join(formulas_location(), name, name + ".sls")
 
         if not path.exists(source):
-            sys.stderr("Error: was expecting to find a %s/ directory or a %s.sls file in %s" % (name, name, formula["html_url"]))
+            sys.stderr.write("Error: was expecting to find a %s/ directory or a %s.sls file in %s\n" % (name, name, formula["html_url"]))
 
         target = path.join(path.curdir, path.split(source)[1])
 
