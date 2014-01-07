@@ -24,3 +24,11 @@ Quite simple:
     cellar list  # list all available formulas (from https://github.com/saltstack-formulas)
     cellar install <list of formulas>
     cellar uninstall <list of formulas>
+
+You can also install a formula of a custom github repository using the pattern <username>/<repository>:
+
+    cellar install <username>/<repository>
+
+**Cellar is expecting the repository to have, either, a directory or a .sls file with the same name than the repository.**
+
+If the repository name contains "-formula", it will be removed from the expected name. Meaning that you can name your repository *stuff-formula* and put inside either a *stuff* directory or a *stuff.sls*.
