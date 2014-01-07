@@ -29,6 +29,16 @@ You can also install a formula of a custom github repository using the pattern <
 
     cellar install <username>/<repository>
 
+    # stupid example
+    cellar install saltstack-formulas/openssh-formula
+
+You can also use a git url this way:
+
+    cellar install <git url>
+
+    # stupid example
+    cellar install git@github.com:saltstack-formulas/openssh-formula.git
+
 **Cellar is expecting the repository to have, either, a directory or a .sls file with the same name than the repository.**
 
 If the repository name contains "-formula", it will be removed from the expected name. Meaning that you can name your repository *stuff-formula* and put inside either a *stuff* directory or a *stuff.sls*.
