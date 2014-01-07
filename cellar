@@ -5,6 +5,8 @@ import sys
 import argh
 import requests
 
+from os import path
+
 
 def get_formulas():
     data = requests.get("https://api.github.com/users/saltstack-formulas/repos").json()
@@ -13,17 +15,17 @@ def get_formulas():
 
 
 def curdir_parent_path():
-    return os.path.split(os.path.realpath(os.path.curdir))[0]
+    return path.split(path.realpath(path.curdir))[0]
 
 
 def curdir_name():
-    return os.path.split(os.path.realpath(os.path.curdir))[1]
+    return path.split(path.realpath(path.curdir))[1]
 
 def formulas_location():
     if curdir_name() == "salt":
-        return os.path.join(curdir_parent_path(), "formulas")
+        return path.join(curdir_parent_path(), "formulas")
 
-    return os.path.join(os.path.realpath(os.path.curdir), "formulas")
+    return path.join(path.realpath(path.curdir), "formulas")
 
 
 def list():
@@ -42,7 +44,7 @@ def install(name):
         sys.stderr.write("Uknow formula: %s\n" % name)
         sys.exit(1)
 
-    if not os.path.exists(formulas_location()):
+    if not path.exists(formulas_location()):
         os.makedirs(formulas_location())
 
 
