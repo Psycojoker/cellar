@@ -40,11 +40,12 @@ def list():
 
 def get_formula(formulas, name):
     name = name.replace("-formula", "")
-    if name not in [x["name"].replace("-formula", "") for x in formulas]:
-        sys.stderr.write("Uknow formula: %s\n" % name)
-        sys.exit(1)
+    if name in [x["name"].replace("-formula", "") for x in formulas]:
+        return filter(lambda x: x["name"].replace("-formula", "") == name, formulas)[0]
 
-    return filter(lambda x: x["name"].replace("-formula", "") == name, formulas)[0]
+    sys.stderr.write("Uknow formula: %s\n" % name)
+    sys.exit(1)
+
 
 
 def install(*names):
