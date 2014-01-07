@@ -44,9 +44,14 @@ def install(name):
         sys.stderr.write("Uknow formula: %s\n" % name)
         sys.exit(1)
 
+    formula = filter(lambda x: x["name"].replace("-formula", "") == name, formulas)[0]
+
     if not path.exists(formulas_location()):
         os.makedirs(formulas_location())
 
+    destination_path = path.join(formulas_location(), name)
+    if not path.exists(destination_path):
+        os.system("git clone %s %s" % (formula["clone_url"], destination_path))
 
 parser = argh.ArghParser()
 parser.add_commands([list, install])
