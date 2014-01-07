@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import sys
 import argh
 import requests
@@ -9,6 +10,20 @@ def get_formulas():
     data = requests.get("https://api.github.com/users/saltstack-formulas/repos").json()
     formulas = filter(lambda x: x["name"].endswith("-formula"), data)
     return sorted(formulas, key=lambda x: x["name"])
+
+
+def curdir_parent_path():
+    return os.path.split(os.path.realpath(os.path.curdir))[0]
+
+
+def curdir_name():
+    return os.path.split(os.path.realpath(os.path.curdir))[1]
+
+def formulas_location():
+    if curdir_name() == "salt":
+        return os.path.join(curdir_parent_path(), "formulas")
+
+    return os.path.join(os.path.realpath(os.path.curdir), "formulas")
 
 
 def list():
@@ -26,6 +41,9 @@ def install(name):
     if name not in [x["name"].replace("-formula", "") for x in formulas]:
         sys.stderr.write("Uknow formula: %s\n" % name)
         sys.exit(1)
+
+    if not os.path.exists(formulas_location()):
+        os.makedirs(formulas_location())
 
 
 parser = argh.ArghParser()
