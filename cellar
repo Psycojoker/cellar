@@ -47,6 +47,10 @@ def get_formula(formulas, name):
     if re.match(r"[\w\-_]+/[\w\-_]+", name):
         return requests.get("https://api.github.com/repos/%s" % name).json()
 
+    # expecting a git url
+    if ":" in name:
+        return {"clone_url": name, "html_url": name}
+
     sys.stderr.write("Unknow formula: %s\n" % name)
     sys.exit(1)
 
@@ -60,7 +64,7 @@ def install(*names):
     for name in names:
         formula = get_formula(get_formulas(), name)
 
-        short_name = filter(None, name.split("/"))[-1].replace("-formula", "")
+        short_name = filter(None, name.split("/"))[-1].replace("-formula", "").replace(".git", "")
 
         if not path.exists(formulas_location()):
             os.makedirs(formulas_location())
