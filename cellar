@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import argh
+import requests
+
+
+def get_formulas():
+    return sorted(filter(lambda x: x["name"].endswith("-formula"), requests.get("https://api.github.com/users/saltstack-formulas/repos").json()), key=lambda x: x["name"])
+
+
+def list():
+    for i in get_formulas():
+        print i["name"].replace("-formula", ""),
+        if i["description"] and i["description"].strip():
+            print "-", i["description"]
+        else:
+            print
+
+parser = argh.ArghParser()
+parser.add_commands([list])
+
+
+if __name__ == '__main__':
+    parser.dispatch()
