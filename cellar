@@ -83,6 +83,7 @@ def install(*names):
 
         if not path.exists(source):
             sys.stderr.write("Error: was expecting to find a %s/ directory or a %s.sls file in %s\n" % (short_name, short_name, formula["html_url"]))
+            sys.exit(1)
 
         target = path.join(path.curdir, path.split(source)[1])
 
