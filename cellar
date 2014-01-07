@@ -58,8 +58,11 @@ def get_formula(formulas, name):
 
 def install(*names):
     if not names:
-        sys.stderr("Give me a list of formulas to install\n")
-        sys.exit(1)
+        if not path.exists(path.join(path.curdir, "formulas.txt")):
+            sys.stderr("Give me a list of formulas to install or write a formulas.txt\n")
+            sys.exit(1)
+
+        names = filter(lambda x: x and not x.startswith("#"), map(lambda x: x.strip(), open(path.join(path.curdir, "formulas.txt")).read().split("\n")))
 
     for name in names:
         formula = get_formula(get_formulas(), name)
