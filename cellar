@@ -76,8 +76,30 @@ def install(*names):
             print "Already installed: %s" % name
 
 
+def uninstall(*names):
+    if not names:
+        sys.stderr("Give me a list of formulas to uninstall\n")
+        sys.exit(1)
+
+    for name in names:
+        target = path.join(path.curdir, name)
+        if not path.exists(target):
+            target += ".sls"
+
+        if not path.exists(target):
+            sys.stderr.write("Error: %s is not installed\n" % name)
+            sys.exit(1)
+
+        if not path.islink(target):
+            sys.stderr.write("Error: %s is not a symlink, unexpected situation, abort\n" % name)
+            sys.exit(1)
+
+        print "Uninstall %s" % name
+        os.remove(target)
+
+
 parser = argh.ArghParser()
-parser.add_commands([list, install])
+parser.add_commands([list, install, uninstall])
 
 
 if __name__ == '__main__':
