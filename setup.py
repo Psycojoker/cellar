@@ -12,7 +12,7 @@ setup(name='cellar',
       url='https://github.com/Psycojoker/cellar',
       install_requires=['argh'],
       packages=[],
-      license='',
+      license='MIT',
       scripts=['cellar', 'requests'],
       keywords='salt pip pkg formula',
       )
