@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import argh
 import requests
 
@@ -18,8 +19,17 @@ def list():
         else:
             print
 
+
+def install(name):
+    formulas = get_formulas()
+    name = name.replace("-formula", "")
+    if name not in [x["name"].replace("-formula", "") for x in formulas]:
+        sys.stderr.write("Uknow formula: %s\n" % name)
+        sys.exit(1)
+
+
 parser = argh.ArghParser()
-parser.add_commands([list])
+parser.add_commands([list, install])
 
 
 if __name__ == '__main__':
