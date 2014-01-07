@@ -57,10 +57,10 @@ Alternatively, you can write a *formulas.txt* file that contains on each line an
 Example:
 
     # you can also write comments in it
-    django
+    dhcpd
     saltstack-formulas/canvas-formula
     git@github.com:saltstack-formulas/docker-formula.git
-    https://github.com/saltstack-formulas/drupal-formula.git
+    https://github.com/saltstack-formulas/epel-formula.git
 
 Then run *cellar install* without any arguments:
 
