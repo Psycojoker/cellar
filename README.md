@@ -12,9 +12,7 @@ You need git to be installed for this to run.
 Installation
 ============
 
-Not on pypi yet, so do:
-
-    pip install "git+https://github.com/Psycojoker/cellar.git"
+    pip install cellar
 
 Usage
 =====
