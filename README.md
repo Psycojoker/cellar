@@ -68,3 +68,20 @@ Then run *cellar install* without any arguments:
 ```bash
 cellar install
 ```
+
+Configuring your formula repository with a formula.yml
+======================================================
+
+You can write a *formula.yml* (so, in yaml, like your sls files) file at the root of your formula repository to add configuration informations. Here is a template, everything is optional:
+
+```yaml
+# list of required formulas on which this formula depends
+install_requires:
+  - dependancy1
+  - dependancy2
+  - ...
+```
+
+This file is optional.
+
+For now, I'm planning on using the same key than in a python setup.py file.
