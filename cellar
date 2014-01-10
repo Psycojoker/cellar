@@ -45,7 +45,17 @@ def get_formula(formulas, name):
 
     # github_username/repository_name
     if re.match(r"[\w\-_]+/[\w\-_]+", name):
-        return requests.get("https://api.github.com/repos/%s" % name).json()
+        formula = requests.get("https://api.github.com/repos/%s" % name).json()
+
+        if not formula.get("message") == u'Not Found':
+            return formula
+
+        formula = requests.get("https://api.github.com/repos/%s-formula" % name).json()
+
+        if not formula.get("message") == u'Not Found':
+            return formula
+
+        sys.stderr.write("Error: neither https://github.com/%s nor https://github.com/%s-formula exist" % (name, name))
 
     # expecting a git url
     if ":" in name:
