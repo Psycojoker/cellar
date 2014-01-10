@@ -126,8 +126,30 @@ def uninstall(*names):
         os.remove(target)
 
 
+def update(*names):
+    formulas_location = get_formulas_location()
+
+    if not names:
+        names = os.listdir(formulas_location)
+        names = map(lambda x: path.join(formulas_location, x), names)
+        names = filter(path.isdir, names)
+        names = filter(lambda x: path.exists(path.join(x, ".git")), names)
+
+        # we don't want absolute path, just name
+        names = map(lambda x: path.split(x)[1], names)
+
+    for name in names:
+        name = name.replace("-formula", "")
+        print "updating %s ..." % name
+        name = path.join(formulas_location, name)
+        if not path.exists(name):
+            sys.stderr.write("Error: %s is not install\n" % path.split(name)[1])
+            sys.exit(1)
+        os.system("cd %s; git pull" % name)
+
+
 parser = argh.ArghParser()
-parser.add_commands([list, install, uninstall])
+parser.add_commands([list, install, uninstall, update])
 
 
 if __name__ == '__main__':
