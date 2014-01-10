@@ -23,6 +23,7 @@ Quite simple:
 cellar list  # list all available formulas (from https://github.com/saltstack-formulas)
 cellar install <list of formulas>
 cellar uninstall <list of formulas>
+cellar update <list of formulas, if empty, update all>
 ```
 
 You can also install a formula of a custom github repository using the pattern <username>/<repository>:
