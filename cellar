@@ -23,7 +23,7 @@ def curdir_name():
     return path.split(path.realpath(path.curdir))[1]
 
 
-def formulas_location():
+def get_formulas_location():
     if curdir_name() == "salt":
         return path.join(curdir_parent_path(), "formulas")
 
@@ -79,17 +79,17 @@ def install(*names):
 
         short_name = filter(None, name.split("/"))[-1].replace("-formula", "").replace(".git", "")
 
-        if not path.exists(formulas_location()):
-            os.makedirs(formulas_location())
+        if not path.exists(get_formulas_location()):
+            os.makedirs(get_formulas_location())
 
-        destination_path = path.join(formulas_location(), short_name)
+        destination_path = path.join(get_formulas_location(), short_name)
         if not path.exists(destination_path):
             print "Retreive %s ..." % name
             os.system("git clone -q %s %s" % (formula["clone_url"], destination_path))
 
-        source = path.join(formulas_location(), short_name, short_name)
+        source = path.join(get_formulas_location(), short_name, short_name)
         if not path.exists(source):
-            source = path.join(formulas_location(), short_name, short_name + ".sls")
+            source = path.join(get_formulas_location(), short_name, short_name + ".sls")
 
         if not path.exists(source):
             sys.stderr.write("Error: was expecting to find a %s/ directory or a %s.sls file in %s\n" % (short_name, short_name, formula["html_url"]))
